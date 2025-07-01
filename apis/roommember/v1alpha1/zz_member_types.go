@@ -14,28 +14,14 @@ import (
 )
 
 type MemberInitParameters struct {
-
-	// (String) Email of the member
-	// Email of the member
-	Email *string `json:"email,omitempty" tf:"email,omitempty"`
-
-	// (String) Role of the member. The community plan can only set the role to admin
-	// Role of the member. The community plan can only set the role to `admin`
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 }
 
 type MemberObservation struct {
-
-	// (String) Email of the member
-	// Email of the member
-	Email *string `json:"email,omitempty" tf:"email,omitempty"`
-
-	// (String) The Member ID of the space
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) Role of the member. The community plan can only set the role to admin
-	// Role of the member. The community plan can only set the role to `admin`
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String) The Room ID of the space
+	// The Room ID of the space
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
 	// (String) Space ID of the member
 	// Space ID of the member
@@ -44,15 +30,19 @@ type MemberObservation struct {
 
 type MemberParameters struct {
 
-	// (String) Email of the member
-	// Email of the member
+	// (String) The Room ID of the space
+	// The Room ID of the space
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
 	// +kubebuilder:validation:Optional
-	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
-	// (String) Role of the member. The community plan can only set the role to admin
-	// Role of the member. The community plan can only set the role to `admin`
+	// Reference to a Room in room to populate roomId.
 	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	RoomIDRef *v1.Reference `json:"roomIdRef,omitempty" tf:"-"`
+
+	// Selector for a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDSelector *v1.Selector `json:"roomIdSelector,omitempty" tf:"-"`
 
 	// (String) Space ID of the member
 	// Space ID of the member
@@ -96,7 +86,7 @@ type MemberStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Member is the Schema for the Members API. Provides a Netdata Cloud Space Member resource. Use this resource to manage user membership to the space.
+// Member is the Schema for the Members API. Provides a Netdata Cloud Room Member resource. Use this resource to manage user membership to the room in the selected space. It is referring to the user created at the space level.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -105,10 +95,8 @@ type MemberStatus struct {
 type Member struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.email) || (has(self.initProvider) && has(self.initProvider.email))",message="spec.forProvider.email is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	Spec   MemberSpec   `json:"spec"`
-	Status MemberStatus `json:"status,omitempty"`
+	Spec              MemberSpec   `json:"spec"`
+	Status            MemberStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

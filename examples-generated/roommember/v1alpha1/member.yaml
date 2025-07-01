@@ -1,0 +1,16 @@
+apiVersion: roommember.netdata.provider.crossplane.rye.ninja/v1alpha1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: roommember/v1alpha1/member
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    roomIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    spaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

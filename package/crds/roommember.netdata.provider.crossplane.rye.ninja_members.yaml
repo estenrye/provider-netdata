@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: members.member.netdata.provider.crossplane.rye.ninja
+  name: members.roommember.netdata.provider.crossplane.rye.ninja
 spec:
-  group: member.netdata.provider.crossplane.rye.ninja
+  group: roommember.netdata.provider.crossplane.rye.ninja
   names:
     categories:
     - crossplane
@@ -35,8 +35,9 @@ spec:
     schema:
       openAPIV3Schema:
         description: Member is the Schema for the Members API. Provides a Netdata
-          Cloud Space Member resource. Use this resource to manage user membership
-          to the space.
+          Cloud Room Member resource. Use this resource to manage user membership
+          to the room in the selected space. It is referring to the user created at
+          the space level.
         properties:
           apiVersion:
             description: |-
@@ -74,16 +75,85 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  email:
+                  roomId:
                     description: |-
-                      (String) Email of the member
-                      Email of the member
+                      (String) The Room ID of the space
+                      The Room ID of the space
                     type: string
-                  role:
-                    description: |-
-                      (String) Role of the member. The community plan can only set the role to admin
-                      Role of the member. The community plan can only set the role to `admin`
-                    type: string
+                  roomIdRef:
+                    description: Reference to a Room in room to populate roomId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  roomIdSelector:
+                    description: Selector for a Room in room to populate roomId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   spaceId:
                     description: |-
                       (String) Space ID of the member
@@ -176,17 +246,6 @@ spec:
                   required on creation, but we do not desire to update them after creation,
                   for example because of an external controller is managing them, like an
                   autoscaler.
-                properties:
-                  email:
-                    description: |-
-                      (String) Email of the member
-                      Email of the member
-                    type: string
-                  role:
-                    description: |-
-                      (String) Role of the member. The community plan can only set the role to admin
-                      Role of the member. The community plan can only set the role to `admin`
-                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -355,32 +414,17 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.email is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.email)
-                || (has(self.initProvider) && has(self.initProvider.email))'
-            - message: spec.forProvider.role is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.role)
-                || (has(self.initProvider) && has(self.initProvider.role))'
           status:
             description: MemberStatus defines the observed state of Member.
             properties:
               atProvider:
                 properties:
-                  email:
-                    description: |-
-                      (String) Email of the member
-                      Email of the member
-                    type: string
                   id:
-                    description: (String) The Member ID of the space
                     type: string
-                  role:
+                  roomId:
                     description: |-
-                      (String) Role of the member. The community plan can only set the role to admin
-                      Role of the member. The community plan can only set the role to `admin`
+                      (String) The Room ID of the space
+                      The Room ID of the space
                     type: string
                   spaceId:
                     description: |-

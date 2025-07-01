@@ -9,7 +9,8 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
-	v1alpha1 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
+	v1alpha1 "github.com/estenrye/provider-netdata/apis/room/v1alpha1"
+	v1alpha11 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -22,13 +23,29 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoomID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.RoomIDRef,
+		Selector:     mg.Spec.ForProvider.RoomIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.RoomList{},
+			Managed: &v1alpha1.Room{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoomID")
+	}
+	mg.Spec.ForProvider.RoomID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoomIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.SpaceIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SpaceList{},
-			Managed: &v1alpha1.Space{},
+			List:    &v1alpha11.SpaceList{},
+			Managed: &v1alpha11.Space{},
 		},
 	})
 	if err != nil {
