@@ -1,0 +1,15 @@
+apiVersion: member.netdata.provider.crossplane.rye.ninja/v1alpha1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: member/v1alpha1/member
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    email: <email>
+    role: admin
+    spaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,4 +1,4 @@
-package spacemember
+package member
 
 import "github.com/crossplane/upjet/pkg/config"
 
@@ -7,7 +7,7 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("netdata_space_member", func(r *config.Resource) {
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "github"
-		r.ShortGroup = "spacemember"
+		r.ShortGroup = "member"
 
 		r.References["space_id"] = config.Reference{
 			Type: "github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space",

@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	member "github.com/estenrye/provider-netdata/internal/controller/member/member"
 	providerconfig "github.com/estenrye/provider-netdata/internal/controller/providerconfig"
 	space "github.com/estenrye/provider-netdata/internal/controller/space/space"
 )
@@ -17,6 +18,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		member.Setup,
 		providerconfig.Setup,
 		space.Setup,
 	} {
