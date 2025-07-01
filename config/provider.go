@@ -10,6 +10,7 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/estenrye/provider-netdata/config/member"
+	noderoommember "github.com/estenrye/provider-netdata/config/node_room_member"
 	"github.com/estenrye/provider-netdata/config/room"
 	roommember "github.com/estenrye/provider-netdata/config/room_member"
 	"github.com/estenrye/provider-netdata/config/space"
@@ -39,6 +40,7 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		member.Configure,
+		noderoommember.Configure,
 		room.Configure,
 		roommember.Configure,
 		space.Configure,
