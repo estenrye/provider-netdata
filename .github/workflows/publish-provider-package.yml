@@ -14,9 +14,15 @@ on:
 
 jobs:
   publish-provider-package:
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider-non-family.yml@main
     with:
       repository: provider-netdata
+      registry_org: estenrye
       version: ${{ github.event.inputs.version }}
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
