@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "template.upbound.io"
+	Group   = "netdata.netdata.provider.crossplane.rye.ninja"
 	Version = "v1alpha1"
 )
 

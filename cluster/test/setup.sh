@@ -13,7 +13,7 @@ ${KUBECTL} -n upbound-system wait --for=condition=Available deployment --all --t
 
 echo "Creating a default provider config..."
 cat <<EOF | ${KUBECTL} apply -f -
-apiVersion: template.upbound.io/v1beta1
+apiVersion: netdata.netdata.provider.crossplane.rye.ninja/v1beta1
 kind: ProviderConfig
 metadata:
   name: default
