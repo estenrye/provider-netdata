@@ -9,8 +9,7 @@ import (
 	_ "embed"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
-
-	"github.com/estenrye/provider-netdata/config/null"
+	"github.com/estenrye/provider-netdata/config/space"
 )
 
 const (
@@ -36,7 +35,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		space.Configure,
 	} {
 		configure(pc)
 	}
