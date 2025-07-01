@@ -11,6 +11,7 @@ import (
 
 	member "github.com/estenrye/provider-netdata/internal/controller/member/member"
 	providerconfig "github.com/estenrye/provider-netdata/internal/controller/providerconfig"
+	room "github.com/estenrye/provider-netdata/internal/controller/room/room"
 	space "github.com/estenrye/provider-netdata/internal/controller/space/space"
 )
 
@@ -20,6 +21,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		member.Setup,
 		providerconfig.Setup,
+		room.Setup,
 		space.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
