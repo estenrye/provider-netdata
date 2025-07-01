@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	discordchannel "github.com/estenrye/provider-netdata/internal/controller/discordchannel/discordchannel"
 	member "github.com/estenrye/provider-netdata/internal/controller/member/member"
 	roommember "github.com/estenrye/provider-netdata/internal/controller/noderoommember/roommember"
 	providerconfig "github.com/estenrye/provider-netdata/internal/controller/providerconfig"
@@ -21,6 +22,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		discordchannel.Setup,
 		member.Setup,
 		roommember.Setup,
 		providerconfig.Setup,

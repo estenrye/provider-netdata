@@ -12,11 +12,12 @@ import (
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"netdata_node_room_member": config.TemplatedStringAsIdentifier("room_id", "{{ .parameters.space_id }},{{ .external_name }}"),
-	"netdata_room":             config.TemplatedStringAsIdentifier("id", "{{ .parameters.space_id }},{{ .external_name }}"),
-	"netdata_room_member":      config.TemplatedStringAsIdentifier("space_member_id", "{{ .parameters.space_id }},{{ .parameters.room_id }},{{ .external_name }}"),
-	"netdata_space":            config.IdentifierFromProvider,
-	"netdata_space_member":     config.TemplatedStringAsIdentifier("id", "{{ .parameters.space_id }},{{ .external_name }}"),
+	"netdata_notification_discord_channel": config.TemplatedStringAsIdentifier("id", "{{ .parameters.space_id }},{{ .external_name }}"),
+	"netdata_node_room_member":             config.TemplatedStringAsIdentifier("room_id", "{{ .parameters.space_id }},{{ .external_name }}"),
+	"netdata_room":                         config.TemplatedStringAsIdentifier("id", "{{ .parameters.space_id }},{{ .external_name }}"),
+	"netdata_room_member":                  config.TemplatedStringAsIdentifier("space_member_id", "{{ .parameters.space_id }},{{ .parameters.room_id }},{{ .external_name }}"),
+	"netdata_space":                        config.IdentifierFromProvider,
+	"netdata_space_member":                 config.TemplatedStringAsIdentifier("id", "{{ .parameters.space_id }},{{ .external_name }}"),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
