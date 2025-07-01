@@ -13,9 +13,8 @@ func Configure(p *config.Provider) {
 			Type: "github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space",
 		}
 
-		// r.References["room_ids"] = config.Reference{
-		// 	// Type: "github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room",
-		// 	TerraformName: "netdata_room",
-		// }
+		r.References["room_ids"] = config.Reference{
+			Type: "github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room",
+		}
 	})
 }
