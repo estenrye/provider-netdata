@@ -4,13 +4,39 @@ Copyright 2022 Upbound Inc.
 
 package config
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"context"
+	"errors"
+	"fmt"
+
+	"github.com/crossplane/upjet/pkg/config"
+)
+
+func netdataSpaceIDExternalName() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.GetIDFn = func(_ context.Context, externalName string, parameters map[string]interface{}, _ map[string]interface{}) (string, error) {
+		spaceID, ok := parameters["space_id"]
+		if !ok {
+			return "", errors.New("space_id cannot be empty")
+		}
+		return fmt.Sprintf("%s,%s", spaceID.(string), externalName), nil
+	}
+	e.GetExternalNameFn = func(tfstate map[string]interface{}) (string, error) {
+		id, ok := tfstate["id"]
+		if !ok {
+			return "", errors.New("id in tfstate cannot be empty")
+		}
+		return id.(string), nil
+	}
+	return e
+}
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"netdata_space": config.IdentifierFromProvider,
+	"netdata_space":        config.IdentifierFromProvider,
+	"netdata_space_member": netdataSpaceIDExternalName(),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
