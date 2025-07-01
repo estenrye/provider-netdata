@@ -1,40 +1,264 @@
-name: hashicorp/null
+name: netdata/netdata
 resources:
-    null_resource:
+    netdata_node_room_member:
         subCategory: ""
-        description: The null_resource resource implements the standard resource lifecycle but takes no further action. On Terraform 1.4 and later, use the terraform_data resource type https://developer.hashicorp.com/terraform/language/resources/terraform-data instead. The triggers argument allows specifying an arbitrary set of values that, when changed, will cause the resource to be replaced.
-        name: null_resource
-        title: null_resource Resource - terraform-provider-null
+        description: 'Provides a Netdata Cloud Node Room Member resource. Use this resource to manage node membership to the room in the selected space. There are two options to add nodes to the room: providing the node names directly, but only reachable nodes will be added to the room, use node_names attribute for thiscreating rules that will automatically add nodes to the room based on the rule, use rule block for this'
+        name: netdata_node_room_member
+        title: netdata_node_room_member Resource - terraform-provider-netdata
         examples:
-            - name: cluster
+            - name: test
               manifest: |-
                 {
-                  "connection": [
+                  "node_names": [
+                    "node1",
+                    "node2"
+                  ],
+                  "room_id": "\u003croom_id\u003e",
+                  "rule": [
                     {
-                      "host": "${element(aws_instance.cluster[*].public_ip, 0)}"
+                      "action": "INCLUDE",
+                      "clause": [
+                        {
+                          "label": "role",
+                          "negate": false,
+                          "operator": "equals",
+                          "value": "parent"
+                        },
+                        {
+                          "label": "environment",
+                          "negate": false,
+                          "operator": "equals",
+                          "value": "production"
+                        }
+                      ],
+                      "description": "Description of the rule"
                     }
                   ],
-                  "provisioner": {
-                    "remote-exec": [
-                      {
-                        "inline": [
-                          "bootstrap-cluster.sh ${join(\" \",\n      aws_instance.cluster[*].private_ip)}"
-                        ]
-                      }
-                    ]
-                  },
-                  "triggers": {
-                    "cluster_instance_ids": "${join(\",\", aws_instance.cluster[*].id)}"
-                  }
+                  "space_id": "\u003cspace_id\u003e"
                 }
-              dependencies:
-                aws_instance.cluster: |-
-                    {
-                      "ami": "ami-0dcc1e21636832c5d",
-                      "count": 3,
-                      "instance_type": "m5.large"
-                    }
         argumentDocs:
-            id: (String) This is set to a random value at create time.
-            triggers: (Map of String) A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
-        importStatements: []
+            action: '(String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.'
+            clause: (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
+            description: (String) The description of the rule.
+            id: (String) The ID of the rule.
+            label: (String) The host label to check.
+            negate: (Boolean) Negate the clause.
+            node_names: (List of String) List of node names to add to the room. At least one node name is required.
+            operator: '(String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.'
+            room_id: (String) The Room ID of the space.
+            rule: (Block List) The node rule to apply to the room. The logical relation between multiple rules is OR. More info here. (see below for nested schema)
+            space_id: (String) Space ID of the member.
+            value: (String) The value to compare against.
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_node_room_member.test space_id,room_id
+    netdata_notification_discord_channel:
+        subCategory: ""
+        description: Resource for managing centralized notifications for Discord. Available only in paid plans.
+        name: netdata_notification_discord_channel
+        title: netdata_notification_discord_channel Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "channel_type": "text",
+                  "enabled": true,
+                  "name": "discord notifications",
+                  "notifications": [
+                    "CRITICAL",
+                    "WARNING",
+                    "CLEAR"
+                  ],
+                  "repeat_notification_min": 30,
+                  "rooms_id": [
+                    "\u003croom_id\u003e"
+                  ],
+                  "space_id": "\u003cspace_id\u003e",
+                  "webhook_url": "https://discord.com/api/webhooks/0000000000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+                }
+        argumentDocs:
+            channel_thread: (String) Discord channel thread name required if channel type is forum
+            channel_type: '(String) Discord channel type. Valid values are: text, forum'
+            enabled: (Boolean) The enabled status of the Discord notification
+            id: (String) The ID of the Discord notification
+            name: (String) The name of the Discord notification
+            notifications: '(List of String) The notification options for the Discord. Valid values are: CRITICAL, WARNING, CLEAR, REACHABLE, UNREACHABLE'
+            repeat_notification_min: (Number) The time interval for the Discord notification to be repeated. The interval is presented in minutes and should be between 30 and 1440, or 0 to avoid repetition, which is the default.
+            rooms_id: (List of String) The list of room IDs to set the Discord notification. If the rooms list is null, the Discord notification will be applied to All rooms
+            space_id: (String) The ID of the space for the Discord notification
+            webhook_url: (String, Sensitive) Discord webhook URL
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_notification_discord_channel.test space_id,channel_id
+    netdata_notification_pagerduty_channel:
+        subCategory: ""
+        description: Resource for managing centralized notifications for Pagerduty. Available only in paid plans.
+        name: netdata_notification_pagerduty_channel
+        title: netdata_notification_pagerduty_channel Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "alert_events_url": "https://events.pagerduty.com/v2/enqueue",
+                  "enabled": true,
+                  "integration_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                  "name": "pagerduty notifications",
+                  "notifications": [
+                    "CRITICAL",
+                    "WARNING",
+                    "CLEAR"
+                  ],
+                  "repeat_notification_min": 30,
+                  "rooms_id": [
+                    "\u003croom_id\u003e"
+                  ],
+                  "space_id": "${netdata_space.test.id}"
+                }
+              references:
+                space_id: netdata_space.test.id
+        argumentDocs:
+            alert_events_url: (String) URL for alert events
+            enabled: (Boolean) The enabled status of the Pagerduty notification
+            id: (String) The ID of the Pagerduty notification
+            integration_key: (String, Sensitive) Integration key
+            name: (String) The name of the Pagerduty notification
+            notifications: '(List of String) The notification options for the Pagerduty. Valid values are: CRITICAL, WARNING, CLEAR, REACHABLE, UNREACHABLE'
+            repeat_notification_min: (Number) The time interval for the Pagerduty notification to be repeated. The interval is presented in minutes and should be between 30 and 1440, or 0 to avoid repetition, which is the default.
+            rooms_id: (List of String) The list of room IDs to set the Pagerduty notification. If the rooms list is null, the Pagerduty notification will be applied to All rooms
+            space_id: (String) The ID of the space for the Pagerduty notification
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_notification_pagerduty_channel.test space_id,channel_id
+    netdata_notification_slack_channel:
+        subCategory: ""
+        description: Resource for managing centralized notifications for Slack. Available only in paid plans.
+        name: netdata_notification_slack_channel
+        title: netdata_notification_slack_channel Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "enabled": true,
+                  "name": "slack notifications",
+                  "notifications": [
+                    "CRITICAL",
+                    "WARNING",
+                    "CLEAR"
+                  ],
+                  "repeat_notification_min": 30,
+                  "rooms_id": [
+                    "\u003croom_id\u003e"
+                  ],
+                  "space_id": "\u003cspace_id\u003e",
+                  "webhook_url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+                }
+        argumentDocs:
+            enabled: (Boolean) The enabled status of the Slack notification
+            id: (String) The ID of the Slack notification
+            name: (String) The name of the Slack notification
+            notifications: '(List of String) The notification options for the Slack. Valid values are: CRITICAL, WARNING, CLEAR, REACHABLE, UNREACHABLE'
+            repeat_notification_min: (Number) The time interval for the Slack notification to be repeated. The interval is presented in minutes and should be between 30 and 1440, or 0 to avoid repetition, which is the default.
+            rooms_id: (List of String) The list of room IDs to set the Slack notification. If the rooms list is null, the Slack notification will be applied to All rooms
+            space_id: (String) The ID of the space for the Slack notification
+            webhook_url: (String, Sensitive) Slack webhook URL
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_notification_slack_channel.test space_id,channel_id
+    netdata_room:
+        subCategory: ""
+        description: Provides a Netdata Cloud Room resource. Use this resource to manage rooms in the selected space.
+        name: netdata_room
+        title: netdata_room Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "description": "Created by Terraform",
+                  "name": "MyTestingSpace",
+                  "space_id": "\u003cspace_id\u003e"
+                }
+        argumentDocs:
+            description: (String) The description of the room
+            id: (String) The ID of the room
+            name: (String) The name of the room
+            space_id: (String) The ID of the space
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_room.test space_id,room_id
+    netdata_room_member:
+        subCategory: ""
+        description: Provides a Netdata Cloud Room Member resource. Use this resource to manage user membership to the room in the selected space. It is referring to the user created at the space level.
+        name: netdata_room_member
+        title: netdata_room_member Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "room_id": "\u003croom_id\u003e",
+                  "space_id": "\u003cspace_id\u003e",
+                  "space_member_id": "\u003cspace_member_id\u003e"
+                }
+        argumentDocs:
+            room_id: (String) The Room ID of the space
+            space_id: (String) Space ID of the member
+            space_member_id: (String) The Space Member ID of the space
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_room_member.test space_id,room_id,space_member_id
+    netdata_space:
+        subCategory: ""
+        description: Provides a Netdata Cloud Space resource. Use this resource to manage spaces.
+        name: netdata_space
+        title: netdata_space Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "description": "Created by Terraform",
+                  "name": "MyTestingSpace"
+                }
+        argumentDocs:
+            claim_token: (String) The claim token of the space
+            description: (String) The description of the space
+            id: (String) The ID of the space
+            name: (String) The name of the space
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_space.test space_id
+    netdata_space_member:
+        subCategory: ""
+        description: Provides a Netdata Cloud Space Member resource. Use this resource to manage user membership to the space.
+        name: netdata_space_member
+        title: netdata_space_member Resource - terraform-provider-netdata
+        examples:
+            - name: test
+              manifest: |-
+                {
+                  "email": "\u003cemail\u003e",
+                  "role": "admin",
+                  "space_id": "\u003cspace_id\u003e"
+                }
+        argumentDocs:
+            email: (String) Email of the member
+            id: (String) The Member ID of the space
+            role: (String) Role of the member. The community plan can only set the role to admin
+            space_id: (String) Space ID of the member
+        importStatements:
+            - |-
+              #!/bin/sh
+
+              terraform import netdata_space_member.test space_id,id

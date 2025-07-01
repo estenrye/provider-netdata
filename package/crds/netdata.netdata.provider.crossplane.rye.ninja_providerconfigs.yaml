@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: providerconfigs.netdata.upbound.io
+  name: providerconfigs.netdata.netdata.provider.crossplane.rye.ninja
 spec:
-  group: netdata.upbound.io
+  group: netdata.netdata.provider.crossplane.rye.ninja
   names:
     categories:
     - crossplane
