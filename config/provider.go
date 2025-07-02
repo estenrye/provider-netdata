@@ -12,6 +12,7 @@ import (
 	"github.com/estenrye/provider-netdata/config/discordchannel"
 	"github.com/estenrye/provider-netdata/config/member"
 	noderoommember "github.com/estenrye/provider-netdata/config/node_room_member"
+	"github.com/estenrye/provider-netdata/config/pagerdutychannel"
 	"github.com/estenrye/provider-netdata/config/room"
 	roommember "github.com/estenrye/provider-netdata/config/room_member"
 	"github.com/estenrye/provider-netdata/config/space"
@@ -43,6 +44,7 @@ func GetProvider() *ujconfig.Provider {
 		discordchannel.Configure,
 		member.Configure,
 		noderoommember.Configure,
+		pagerdutychannel.Configure,
 		room.Configure,
 		roommember.Configure,
 		space.Configure,

@@ -12,6 +12,7 @@ import (
 	discordchannel "github.com/estenrye/provider-netdata/internal/controller/discordchannel/discordchannel"
 	member "github.com/estenrye/provider-netdata/internal/controller/member/member"
 	roommember "github.com/estenrye/provider-netdata/internal/controller/noderoommember/roommember"
+	pagerdutychannel "github.com/estenrye/provider-netdata/internal/controller/pagerdutychannel/pagerdutychannel"
 	providerconfig "github.com/estenrye/provider-netdata/internal/controller/providerconfig"
 	room "github.com/estenrye/provider-netdata/internal/controller/room/room"
 	memberroommember "github.com/estenrye/provider-netdata/internal/controller/roommember/member"
@@ -25,6 +26,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		discordchannel.Setup,
 		member.Setup,
 		roommember.Setup,
+		pagerdutychannel.Setup,
 		providerconfig.Setup,
 		room.Setup,
 		memberroommember.Setup,
