@@ -16,6 +16,7 @@ import (
 	providerconfig "github.com/estenrye/provider-netdata/internal/controller/providerconfig"
 	room "github.com/estenrye/provider-netdata/internal/controller/room/room"
 	memberroommember "github.com/estenrye/provider-netdata/internal/controller/roommember/member"
+	slackchannel "github.com/estenrye/provider-netdata/internal/controller/slackchannel/slackchannel"
 	space "github.com/estenrye/provider-netdata/internal/controller/space/space"
 )
 
@@ -30,6 +31,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		providerconfig.Setup,
 		room.Setup,
 		memberroommember.Setup,
+		slackchannel.Setup,
 		space.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

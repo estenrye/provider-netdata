@@ -16,6 +16,7 @@ import (
 	v1alpha1pagerdutychannel "github.com/estenrye/provider-netdata/apis/pagerdutychannel/v1alpha1"
 	v1alpha1room "github.com/estenrye/provider-netdata/apis/room/v1alpha1"
 	v1alpha1roommember "github.com/estenrye/provider-netdata/apis/roommember/v1alpha1"
+	v1alpha1slackchannel "github.com/estenrye/provider-netdata/apis/slackchannel/v1alpha1"
 	v1alpha1space "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	v1alpha1apis "github.com/estenrye/provider-netdata/apis/v1alpha1"
 	v1beta1 "github.com/estenrye/provider-netdata/apis/v1beta1"
@@ -30,6 +31,7 @@ func init() {
 		v1alpha1pagerdutychannel.SchemeBuilder.AddToScheme,
 		v1alpha1room.SchemeBuilder.AddToScheme,
 		v1alpha1roommember.SchemeBuilder.AddToScheme,
+		v1alpha1slackchannel.SchemeBuilder.AddToScheme,
 		v1alpha1space.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
