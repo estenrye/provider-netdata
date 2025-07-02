@@ -80,9 +80,35 @@ type RoomMemberInitParameters struct {
 	// List of node names to add to the room. At least one node name is required.
 	NodeNames []*string `json:"nodeNames,omitempty" tf:"node_names,omitempty"`
 
+	// (String) The Room ID of the space.
+	// The Room ID of the space.
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
+
+	// Reference to a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDRef *v1.Reference `json:"roomIdRef,omitempty" tf:"-"`
+
+	// Selector for a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDSelector *v1.Selector `json:"roomIdSelector,omitempty" tf:"-"`
+
 	// (Block List) The node rule to apply to the room. The logical relation between multiple rules is OR. More info here. (see below for nested schema)
 	// The node rule to apply to the room. The logical relation between multiple rules is OR. More info [here](https://learn.netdata.cloud/docs/netdata-cloud/spaces-and-rooms/node-rule-based-room-assignment).
 	Rule []RuleInitParameters `json:"rule,omitempty" tf:"rule,omitempty"`
+
+	// (String) Space ID of the member.
+	// Space ID of the member.
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
 }
 
 type RoomMemberObservation struct {
@@ -93,6 +119,10 @@ type RoomMemberObservation struct {
 	// (List of String) List of node names to add to the room. At least one node name is required.
 	// List of node names to add to the room. At least one node name is required.
 	NodeNames []*string `json:"nodeNames,omitempty" tf:"node_names,omitempty"`
+
+	// (String) The Room ID of the space.
+	// The Room ID of the space.
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
 	// (Block List) The node rule to apply to the room. The logical relation between multiple rules is OR. More info here. (see below for nested schema)
 	// The node rule to apply to the room. The logical relation between multiple rules is OR. More info [here](https://learn.netdata.cloud/docs/netdata-cloud/spaces-and-rooms/node-rule-based-room-assignment).
@@ -109,6 +139,20 @@ type RoomMemberParameters struct {
 	// List of node names to add to the room. At least one node name is required.
 	// +kubebuilder:validation:Optional
 	NodeNames []*string `json:"nodeNames,omitempty" tf:"node_names,omitempty"`
+
+	// (String) The Room ID of the space.
+	// The Room ID of the space.
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +kubebuilder:validation:Optional
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
+
+	// Reference to a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDRef *v1.Reference `json:"roomIdRef,omitempty" tf:"-"`
+
+	// Selector for a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDSelector *v1.Selector `json:"roomIdSelector,omitempty" tf:"-"`
 
 	// (Block List) The node rule to apply to the room. The logical relation between multiple rules is OR. More info here. (see below for nested schema)
 	// The node rule to apply to the room. The logical relation between multiple rules is OR. More info [here](https://learn.netdata.cloud/docs/netdata-cloud/spaces-and-rooms/node-rule-based-room-assignment).

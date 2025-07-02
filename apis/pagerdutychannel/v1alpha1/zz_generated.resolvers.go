@@ -37,5 +37,21 @@ func (mg *PagerdutyChannel) ResolveReferences(ctx context.Context, c client.Read
 	mg.Spec.ForProvider.SpaceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SpaceIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.SpaceIDRef,
+		Selector:     mg.Spec.InitProvider.SpaceIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.SpaceList{},
+			Managed: &v1alpha1.Space{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SpaceID")
+	}
+	mg.Spec.InitProvider.SpaceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SpaceIDRef = rsp.ResolvedReference
+
 	return nil
 }

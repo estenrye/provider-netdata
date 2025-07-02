@@ -90,6 +90,21 @@ func (in *DiscordChannelInitParameters) DeepCopyInto(out *DiscordChannelInitPara
 			}
 		}
 	}
+	if in.SpaceID != nil {
+		in, out := &in.SpaceID, &out.SpaceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SpaceIDRef != nil {
+		in, out := &in.SpaceIDRef, &out.SpaceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SpaceIDSelector != nil {
+		in, out := &in.SpaceIDSelector, &out.SpaceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	out.WebhookURLSecretRef = in.WebhookURLSecretRef
 }
 

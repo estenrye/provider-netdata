@@ -22,6 +22,20 @@ type RoomInitParameters struct {
 	// (String) The name of the room
 	// The name of the room
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) The ID of the space
+	// The ID of the space
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
 }
 
 type RoomObservation struct {
@@ -57,6 +71,7 @@ type RoomParameters struct {
 	// (String) The ID of the space
 	// The ID of the space
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 

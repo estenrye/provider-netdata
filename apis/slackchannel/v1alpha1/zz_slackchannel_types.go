@@ -35,6 +35,19 @@ type SlackChannelInitParameters struct {
 	// The list of room IDs to set the Slack notification. If the rooms list is null, the Slack notification will be applied to `All rooms`
 	RoomsID []*string `json:"roomsId,omitempty" tf:"rooms_id,omitempty"`
 
+	// (String) The ID of the space for the Slack notification
+	// The ID of the space for the Slack notification
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
+
 	// (String, Sensitive) Slack webhook URL
 	// Slack webhook URL
 	WebhookURLSecretRef v1.SecretKeySelector `json:"webhookUrlSecretRef" tf:"-"`

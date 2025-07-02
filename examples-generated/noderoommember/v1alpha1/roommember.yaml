@@ -11,6 +11,9 @@ spec:
     nodeNames:
     - node1
     - node2
+    roomIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     rule:
     - action: INCLUDE
       clause:

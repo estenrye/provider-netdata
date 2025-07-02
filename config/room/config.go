@@ -1,6 +1,8 @@
 package room
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"github.com/crossplane/upjet/pkg/config"
+)
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
@@ -9,8 +11,11 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "github"
 		r.ShortGroup = "room"
 
+		r.ExternalName = config.NewExternalNameFrom(config.IdentifierFromProvider)
+
 		r.References["space_id"] = config.Reference{
-			Type: "github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space",
+			TerraformName: "netdata_space",
+			Extractor:     "github.com/crossplane/upjet/pkg/resource.ExtractResourceID()",
 		}
 	})
 }

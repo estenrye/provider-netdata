@@ -159,12 +159,42 @@ func (in *RoomMemberInitParameters) DeepCopyInto(out *RoomMemberInitParameters) 
 			}
 		}
 	}
+	if in.RoomID != nil {
+		in, out := &in.RoomID, &out.RoomID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RoomIDRef != nil {
+		in, out := &in.RoomIDRef, &out.RoomIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoomIDSelector != nil {
+		in, out := &in.RoomIDSelector, &out.RoomIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Rule != nil {
 		in, out := &in.Rule, &out.Rule
 		*out = make([]RuleInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.SpaceID != nil {
+		in, out := &in.SpaceID, &out.SpaceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SpaceIDRef != nil {
+		in, out := &in.SpaceIDRef, &out.SpaceIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SpaceIDSelector != nil {
+		in, out := &in.SpaceIDSelector, &out.SpaceIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -229,6 +259,11 @@ func (in *RoomMemberObservation) DeepCopyInto(out *RoomMemberObservation) {
 			}
 		}
 	}
+	if in.RoomID != nil {
+		in, out := &in.RoomID, &out.RoomID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Rule != nil {
 		in, out := &in.Rule, &out.Rule
 		*out = make([]RuleObservation, len(*in))
@@ -266,6 +301,21 @@ func (in *RoomMemberParameters) DeepCopyInto(out *RoomMemberParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.RoomID != nil {
+		in, out := &in.RoomID, &out.RoomID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RoomIDRef != nil {
+		in, out := &in.RoomIDRef, &out.RoomIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RoomIDSelector != nil {
+		in, out := &in.RoomIDSelector, &out.RoomIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Rule != nil {
 		in, out := &in.Rule, &out.Rule

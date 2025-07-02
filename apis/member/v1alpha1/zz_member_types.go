@@ -22,6 +22,19 @@ type MemberInitParameters struct {
 	// (String) Role of the member. The community plan can only set the role to admin
 	// Role of the member. The community plan can only set the role to `admin`
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// (String) Space ID of the member
+	// Space ID of the member
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
 }
 
 type MemberObservation struct {

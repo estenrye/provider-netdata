@@ -42,6 +42,19 @@ type PagerdutyChannelInitParameters struct {
 	// (List of String) The list of room IDs to set the Pagerduty notification. If the rooms list is null, the Pagerduty notification will be applied to All rooms
 	// The list of room IDs to set the Pagerduty notification. If the rooms list is null, the Pagerduty notification will be applied to `All rooms`
 	RoomsID []*string `json:"roomsId,omitempty" tf:"rooms_id,omitempty"`
+
+	// (String) The ID of the space for the Pagerduty notification
+	// The ID of the space for the Pagerduty notification
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
 }
 
 type PagerdutyChannelObservation struct {

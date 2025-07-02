@@ -1,0 +1,15 @@
+apiVersion: room.netdata.provider.crossplane.rye.ninja/v1alpha1
+kind: Room
+metadata:
+  annotations:
+    meta.upbound.io/example-id: room/v1alpha1/room
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    description: Created by Terraform
+    name: MyTestingSpace
+    spaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
