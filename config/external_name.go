@@ -58,7 +58,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"netdata_room":                           config.IdentifierFromProvider,
 	"netdata_room_member":                    config.TemplatedStringAsIdentifier("space_member_id", "{{ .parameters.space_id }},{{ .parameters.room_id }},{{ .external_name }}"),
 	"netdata_space":                          config.IdentifierFromProvider,
-	"netdata_space_member":                   netdataSpaceRoomIDName(),
+	"netdata_space_member":                   config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

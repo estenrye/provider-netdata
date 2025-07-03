@@ -9,6 +9,8 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "github"
 		r.ShortGroup = "member"
 
+		r.ExternalName = config.NewExternalNameFrom(config.IdentifierFromProvider)
+
 		r.References["space_id"] = config.Reference{
 			Type: "github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space",
 		}
