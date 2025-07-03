@@ -261,3 +261,32 @@ help-special: crossplane.help
 # TODO(negz): Update CI to use these targets.
 vendor: modules.download
 vendor.check: modules.check
+
+deploy-examples:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl apply -f examples/providerconfig/secret.yaml
+	kubectl apply -f examples/providerconfig/providerconfig.yaml
+	kubectl apply -f examples/space/space.yaml
+	kubectl apply -f examples/room/room.yaml
+	kubectl apply -f examples/member/member.yaml
+	kubectl apply -f examples/roommember/member.yaml
+
+clean-all:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl delete -f examples/roommember/member.yaml
+	kubectl delete -f examples/member/member.yaml
+	kubectl delete -f examples/room/room.yaml
+	kubectl delete -f examples/space/space.yaml
+	kind delete cluster --name local-dev
+
+follow-logs:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl logs -n upbound-system -l pkg.crossplane.io/provider=provider-netdata -f
+
+exec:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl exec -n upbound-system deploy/provider-netdata-provider-net -it -- bash

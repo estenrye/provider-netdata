@@ -9,6 +9,8 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
+	v1alpha12 "github.com/estenrye/provider-netdata/apis/member/v1alpha1"
 	v1alpha1 "github.com/estenrye/provider-netdata/apis/room/v1alpha1"
 	v1alpha11 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	errors "github.com/pkg/errors"
@@ -24,7 +26,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoomID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.RoomIDRef,
 		Selector:     mg.Spec.ForProvider.RoomIDSelector,
 		To: reference.To{
@@ -40,7 +42,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SpaceIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceIDSelector,
 		To: reference.To{
@@ -53,6 +55,70 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.SpaceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SpaceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceMemberID),
+		Extract:      resource.ExtractParamPath("id", true),
+		Reference:    mg.Spec.ForProvider.SpaceMemberIDRef,
+		Selector:     mg.Spec.ForProvider.SpaceMemberIDSelector,
+		To: reference.To{
+			List:    &v1alpha12.MemberList{},
+			Managed: &v1alpha12.Member{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SpaceMemberID")
+	}
+	mg.Spec.ForProvider.SpaceMemberID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SpaceMemberIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RoomID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.RoomIDRef,
+		Selector:     mg.Spec.InitProvider.RoomIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.RoomList{},
+			Managed: &v1alpha1.Room{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RoomID")
+	}
+	mg.Spec.InitProvider.RoomID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RoomIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceID),
+		Extract:      resource.ExtractResourceID(),
+		Reference:    mg.Spec.InitProvider.SpaceIDRef,
+		Selector:     mg.Spec.InitProvider.SpaceIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.SpaceList{},
+			Managed: &v1alpha11.Space{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SpaceID")
+	}
+	mg.Spec.InitProvider.SpaceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SpaceIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceMemberID),
+		Extract:      resource.ExtractParamPath("id", true),
+		Reference:    mg.Spec.InitProvider.SpaceMemberIDRef,
+		Selector:     mg.Spec.InitProvider.SpaceMemberIDSelector,
+		To: reference.To{
+			List:    &v1alpha12.MemberList{},
+			Managed: &v1alpha12.Member{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SpaceMemberID")
+	}
+	mg.Spec.InitProvider.SpaceMemberID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SpaceMemberIDRef = rsp.ResolvedReference
 
 	return nil
 }

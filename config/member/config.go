@@ -1,6 +1,12 @@
 package member
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"github.com/crossplane/upjet/pkg/config"
+)
+
+func NewExternalName() config.ExternalName {
+	return config.NewExternalNameFrom(config.IdentifierFromProvider)
+}
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
@@ -9,10 +15,11 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "github"
 		r.ShortGroup = "member"
 
-		r.ExternalName = config.NewExternalNameFrom(config.IdentifierFromProvider)
+		r.ExternalName = NewExternalName()
 
 		r.References["space_id"] = config.Reference{
-			Type: "github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space",
+			TerraformName: "netdata_space",
+			Extractor:     "github.com/crossplane/upjet/pkg/resource.ExtractResourceID()",
 		}
 	})
 }

@@ -14,6 +14,48 @@ import (
 )
 
 type MemberInitParameters struct {
+
+	// (String) The Room ID of the space
+	// The Room ID of the space
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
+
+	// Reference to a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDRef *v1.Reference `json:"roomIdRef,omitempty" tf:"-"`
+
+	// Selector for a Room in room to populate roomId.
+	// +kubebuilder:validation:Optional
+	RoomIDSelector *v1.Selector `json:"roomIdSelector,omitempty" tf:"-"`
+
+	// (String) Space ID of the member
+	// Space ID of the member
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// Reference to a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDRef *v1.Reference `json:"spaceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Space in space to populate spaceId.
+	// +kubebuilder:validation:Optional
+	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
+
+	// (String) The Space Member ID of the space
+	// The Space Member ID of the space
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/member/v1alpha1.Member
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("id", true)
+	SpaceMemberID *string `json:"spaceMemberId,omitempty" tf:"space_member_id,omitempty"`
+
+	// Reference to a Member in member to populate spaceMemberId.
+	// +kubebuilder:validation:Optional
+	SpaceMemberIDRef *v1.Reference `json:"spaceMemberIdRef,omitempty" tf:"-"`
+
+	// Selector for a Member in member to populate spaceMemberId.
+	// +kubebuilder:validation:Optional
+	SpaceMemberIDSelector *v1.Selector `json:"spaceMemberIdSelector,omitempty" tf:"-"`
 }
 
 type MemberObservation struct {
@@ -26,6 +68,10 @@ type MemberObservation struct {
 	// (String) Space ID of the member
 	// Space ID of the member
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
+
+	// (String) The Space Member ID of the space
+	// The Space Member ID of the space
+	SpaceMemberID *string `json:"spaceMemberId,omitempty" tf:"space_member_id,omitempty"`
 }
 
 type MemberParameters struct {
@@ -33,6 +79,7 @@ type MemberParameters struct {
 	// (String) The Room ID of the space
 	// The Room ID of the space
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
@@ -47,6 +94,7 @@ type MemberParameters struct {
 	// (String) Space ID of the member
 	// Space ID of the member
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 
@@ -57,6 +105,21 @@ type MemberParameters struct {
 	// Selector for a Space in space to populate spaceId.
 	// +kubebuilder:validation:Optional
 	SpaceIDSelector *v1.Selector `json:"spaceIdSelector,omitempty" tf:"-"`
+
+	// (String) The Space Member ID of the space
+	// The Space Member ID of the space
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/member/v1alpha1.Member
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("id", true)
+	// +kubebuilder:validation:Optional
+	SpaceMemberID *string `json:"spaceMemberId,omitempty" tf:"space_member_id,omitempty"`
+
+	// Reference to a Member in member to populate spaceMemberId.
+	// +kubebuilder:validation:Optional
+	SpaceMemberIDRef *v1.Reference `json:"spaceMemberIdRef,omitempty" tf:"-"`
+
+	// Selector for a Member in member to populate spaceMemberId.
+	// +kubebuilder:validation:Optional
+	SpaceMemberIDSelector *v1.Selector `json:"spaceMemberIdSelector,omitempty" tf:"-"`
 }
 
 // MemberSpec defines the desired state of Member

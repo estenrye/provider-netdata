@@ -10,6 +10,10 @@ import (
 	"fmt"
 
 	"github.com/crossplane/upjet/pkg/config"
+	member "github.com/estenrye/provider-netdata/config/member"
+	"github.com/estenrye/provider-netdata/config/room"
+	roommember "github.com/estenrye/provider-netdata/config/room_member"
+	"github.com/estenrye/provider-netdata/config/space"
 )
 
 func netdataSpaceIDExternalName() config.ExternalName {
@@ -55,10 +59,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"netdata_notification_pagerduty_channel": netdataSpaceIDExternalName(),
 	"netdata_notification_slack_channel":     netdataSpaceIDExternalName(),
 	"netdata_node_room_member":               netdataSpaceRoomIDName(),
-	"netdata_room":                           config.IdentifierFromProvider,
-	"netdata_room_member":                    config.TemplatedStringAsIdentifier("space_member_id", "{{ .parameters.space_id }},{{ .parameters.room_id }},{{ .external_name }}"),
-	"netdata_space":                          config.IdentifierFromProvider,
-	"netdata_space_member":                   config.IdentifierFromProvider,
+	"netdata_room":                           room.NewExternalName(),
+	"netdata_room_member":                    roommember.NewExternalName(),
+	"netdata_space":                          space.NewExternalName(),
+	"netdata_space_member":                   member.NewExternalName(),
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

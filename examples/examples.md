@@ -64,3 +64,19 @@ using their email address for authentication.
 ```bash
 kubectl apply -f examples/member/member.yaml
 ```
+
+## NetData Room Member Resources
+
+```bash
+kubectl apply -f examples/roommember/member.yaml
+```
+
+## Environment Cleanup
+
+```bash
+kubectl delete -f examples/roommember/member.yaml
+kubectl delete -f examples/member/member.yaml
+kubectl delete -f examples/room/room.yaml
+kubectl delete -f examples/space/space.yaml
+kind delete cluster --name local-dev
+```

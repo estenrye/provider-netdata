@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	v1alpha1 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -23,7 +24,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SpaceIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceIDSelector,
 		To: reference.To{
@@ -39,7 +40,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SpaceIDRef,
 		Selector:     mg.Spec.InitProvider.SpaceIDSelector,
 		To: reference.To{
