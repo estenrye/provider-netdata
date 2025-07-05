@@ -4,6 +4,7 @@ import (
 	"github.com/crossplane/upjet/pkg/config"
 )
 
+// NewExternalName returns a new ExternalName for the discord channel resource.
 func NewExternalName() config.ExternalName {
 	return config.NewExternalNameFrom(config.IdentifierFromProvider)
 }

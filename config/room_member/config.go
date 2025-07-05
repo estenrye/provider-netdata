@@ -73,6 +73,7 @@ func getFullyQualifiedIDfunc(ctx context.Context, externalName string, parameter
 	return fmt.Sprintf("%s,%s,%s", spaceIDStr, roomIDStr, spaceMemberIDStr), nil
 }
 
+// NewExternalName returns a new ExternalName for the room member resource.
 func NewExternalName() config.ExternalName {
 	externalName := config.NewExternalNameFrom(
 		config.TemplatedStringAsIdentifier("", "{{ .parameters.space_id }},{{ .parameters.room_id }},{{ .parameters.space_member_id }}"),

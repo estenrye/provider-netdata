@@ -55,6 +55,7 @@ func getFullyQualifiedIDfunc(ctx context.Context, externalName string, parameter
 	return fmt.Sprintf("%s,%s", spaceIDStr, roomIDStr), nil
 }
 
+// NewExternalName returns a new ExternalName for the node room member resource.
 func NewExternalName() config.ExternalName {
 	externalName := config.NewExternalNameFrom(
 		config.TemplatedStringAsIdentifier("", "{{ .parameters.space_id }},{{ .parameters.room_id }}"),

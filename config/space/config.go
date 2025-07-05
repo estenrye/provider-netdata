@@ -2,6 +2,7 @@ package space
 
 import "github.com/crossplane/upjet/pkg/config"
 
+// NewExternalName returns a new ExternalName for the Slack channel resource.
 func NewExternalName() config.ExternalName {
 	return config.NewExternalNameFrom(config.IdentifierFromProvider)
 }
