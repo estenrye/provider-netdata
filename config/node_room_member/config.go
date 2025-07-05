@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/crossplane/upjet/pkg/config"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
 )
 
@@ -75,6 +76,56 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = "noderoommember"
 
 		r.ExternalName = NewExternalName()
+
+		r.TerraformResource.Schema["rule"].Type = schema.TypeList
+		r.TerraformResource.Schema["rule"].Elem = &schema.Resource{
+
+			Schema: map[string]*schema.Schema{
+				"action": {Type: schema.TypeString, Required: true, ForceNew: false},
+				"clause": {
+					Type:     schema.TypeList,
+					Required: true,
+					ForceNew: false,
+					Elem: &schema.Resource{
+						Schema: map[string]*schema.Schema{
+							"label": {
+								Type:     schema.TypeString,
+								Required: true,
+								ForceNew: false,
+							},
+							"negate": {
+								Type:     schema.TypeBool,
+								Optional: true,
+								Default:  false,
+								ForceNew: false,
+							},
+							"operator": {
+								Type:     schema.TypeString,
+								Required: true,
+								ForceNew: false,
+							},
+							"value": {
+								Type:     schema.TypeString,
+								Required: true,
+								ForceNew: false,
+							},
+						},
+					},
+				},
+				"description": {
+					Type:     schema.TypeString,
+					Optional: true,
+					ForceNew: false,
+				},
+				"id": {
+					Type:     schema.TypeString,
+					Computed: true,
+					Required: true,
+					ForceNew: false,
+					// This is a computed field, so we don't need to set it in the schema
+				},
+			},
+		}
 
 		r.References["space_id"] = config.Reference{
 			TerraformName: "netdata_space",

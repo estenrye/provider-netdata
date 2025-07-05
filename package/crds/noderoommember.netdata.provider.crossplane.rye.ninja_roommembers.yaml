@@ -171,42 +171,35 @@ spec:
                     items:
                       properties:
                         action:
-                          description: |-
-                            (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-                            Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
+                          description: '(String) Determines whether matching nodes
+                            will be included or excluded from the room. Valid values:
+                            INCLUDE or EXCLUDE. EXCLUDE action always takes precedence
+                            against INCLUDE.'
                           type: string
                         clause:
-                          description: |-
-                            (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-                            The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
+                          description: (Block List) The clause to apply to the rule.
+                            The logical relation between multiple clauses is AND.
+                            It should be a least one clause. (see below for nested
+                            schema)
                           items:
                             properties:
                               label:
-                                description: |-
-                                  (String) The host label to check.
-                                  The host label to check.
+                                description: (String) The host label to check.
                                 type: string
                               negate:
-                                description: |-
-                                  (Boolean) Negate the clause.
-                                  Negate the clause.
+                                description: (Boolean) Negate the clause.
                                 type: boolean
                               operator:
-                                description: |-
-                                  (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-                                  Operator to compare. Valid values: equals, starts_with, ends_with, contains.
+                                description: '(String) Operator to compare. Valid
+                                  values: equals, starts_with, ends_with, contains.'
                                 type: string
                               value:
-                                description: |-
-                                  (String) The value to compare against.
-                                  The value to compare against.
+                                description: (String) The value to compare against.
                                 type: string
                             type: object
                           type: array
                         description:
-                          description: |-
-                            (String) The description of the rule.
-                            The description of the rule.
+                          description: (String) The description of the rule.
                           type: string
                       type: object
                     type: array
@@ -396,42 +389,35 @@ spec:
                     items:
                       properties:
                         action:
-                          description: |-
-                            (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-                            Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
+                          description: '(String) Determines whether matching nodes
+                            will be included or excluded from the room. Valid values:
+                            INCLUDE or EXCLUDE. EXCLUDE action always takes precedence
+                            against INCLUDE.'
                           type: string
                         clause:
-                          description: |-
-                            (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-                            The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
+                          description: (Block List) The clause to apply to the rule.
+                            The logical relation between multiple clauses is AND.
+                            It should be a least one clause. (see below for nested
+                            schema)
                           items:
                             properties:
                               label:
-                                description: |-
-                                  (String) The host label to check.
-                                  The host label to check.
+                                description: (String) The host label to check.
                                 type: string
                               negate:
-                                description: |-
-                                  (Boolean) Negate the clause.
-                                  Negate the clause.
+                                description: (Boolean) Negate the clause.
                                 type: boolean
                               operator:
-                                description: |-
-                                  (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-                                  Operator to compare. Valid values: equals, starts_with, ends_with, contains.
+                                description: '(String) Operator to compare. Valid
+                                  values: equals, starts_with, ends_with, contains.'
                                 type: string
                               value:
-                                description: |-
-                                  (String) The value to compare against.
-                                  The value to compare against.
+                                description: (String) The value to compare against.
                                 type: string
                             type: object
                           type: array
                         description:
-                          description: |-
-                            (String) The description of the rule.
-                            The description of the rule.
+                          description: (String) The description of the rule.
                           type: string
                       type: object
                     type: array
@@ -709,47 +695,38 @@ spec:
                     items:
                       properties:
                         action:
-                          description: |-
-                            (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-                            Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
+                          description: '(String) Determines whether matching nodes
+                            will be included or excluded from the room. Valid values:
+                            INCLUDE or EXCLUDE. EXCLUDE action always takes precedence
+                            against INCLUDE.'
                           type: string
                         clause:
-                          description: |-
-                            (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-                            The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
+                          description: (Block List) The clause to apply to the rule.
+                            The logical relation between multiple clauses is AND.
+                            It should be a least one clause. (see below for nested
+                            schema)
                           items:
                             properties:
                               label:
-                                description: |-
-                                  (String) The host label to check.
-                                  The host label to check.
+                                description: (String) The host label to check.
                                 type: string
                               negate:
-                                description: |-
-                                  (Boolean) Negate the clause.
-                                  Negate the clause.
+                                description: (Boolean) Negate the clause.
                                 type: boolean
                               operator:
-                                description: |-
-                                  (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-                                  Operator to compare. Valid values: equals, starts_with, ends_with, contains.
+                                description: '(String) Operator to compare. Valid
+                                  values: equals, starts_with, ends_with, contains.'
                                 type: string
                               value:
-                                description: |-
-                                  (String) The value to compare against.
-                                  The value to compare against.
+                                description: (String) The value to compare against.
                                 type: string
                             type: object
                           type: array
                         description:
-                          description: |-
-                            (String) The description of the rule.
-                            The description of the rule.
+                          description: (String) The description of the rule.
                           type: string
                         id:
-                          description: |-
-                            (String) The ID of the rule.
-                            The ID of the rule.
+                          description: (String) The ID of the rule.
                           type: string
                       type: object
                     type: array

@@ -16,60 +16,48 @@ import (
 type ClauseInitParameters struct {
 
 	// (String) The host label to check.
-	// The host label to check.
 	Label *string `json:"label,omitempty" tf:"label,omitempty"`
 
 	// (Boolean) Negate the clause.
-	// Negate the clause.
 	Negate *bool `json:"negate,omitempty" tf:"negate,omitempty"`
 
 	// (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-	// Operator to compare. Valid values: equals, starts_with, ends_with, contains.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
 	// (String) The value to compare against.
-	// The value to compare against.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type ClauseObservation struct {
 
 	// (String) The host label to check.
-	// The host label to check.
 	Label *string `json:"label,omitempty" tf:"label,omitempty"`
 
 	// (Boolean) Negate the clause.
-	// Negate the clause.
 	Negate *bool `json:"negate,omitempty" tf:"negate,omitempty"`
 
 	// (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-	// Operator to compare. Valid values: equals, starts_with, ends_with, contains.
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
 	// (String) The value to compare against.
-	// The value to compare against.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type ClauseParameters struct {
 
 	// (String) The host label to check.
-	// The host label to check.
 	// +kubebuilder:validation:Optional
 	Label *string `json:"label" tf:"label,omitempty"`
 
 	// (Boolean) Negate the clause.
-	// Negate the clause.
 	// +kubebuilder:validation:Optional
-	Negate *bool `json:"negate" tf:"negate,omitempty"`
+	Negate *bool `json:"negate,omitempty" tf:"negate,omitempty"`
 
 	// (String) Operator to compare. Valid values: equals, starts_with, ends_with, contains.
-	// Operator to compare. Valid values: equals, starts_with, ends_with, contains.
 	// +kubebuilder:validation:Optional
 	Operator *string `json:"operator" tf:"operator,omitempty"`
 
 	// (String) The value to compare against.
-	// The value to compare against.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`
 }
@@ -181,51 +169,41 @@ type RoomMemberParameters struct {
 type RuleInitParameters struct {
 
 	// (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-	// Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-	// The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
 	Clause []ClauseInitParameters `json:"clause,omitempty" tf:"clause,omitempty"`
 
 	// (String) The description of the rule.
-	// The description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 }
 
 type RuleObservation struct {
 
 	// (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-	// Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-	// The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
 	Clause []ClauseObservation `json:"clause,omitempty" tf:"clause,omitempty"`
 
 	// (String) The description of the rule.
-	// The description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) The ID of the rule.
-	// The ID of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type RuleParameters struct {
 
 	// (String) Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
-	// Determines whether matching nodes will be included or excluded from the room. Valid values: INCLUDE or EXCLUDE. EXCLUDE action always takes precedence against INCLUDE.
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
 	// (Block List) The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause. (see below for nested schema)
-	// The clause to apply to the rule. The logical relation between multiple clauses is AND. It should be a least one clause.
 	// +kubebuilder:validation:Optional
-	Clause []ClauseParameters `json:"clause,omitempty" tf:"clause,omitempty"`
+	Clause []ClauseParameters `json:"clause" tf:"clause,omitempty"`
 
 	// (String) The description of the rule.
-	// The description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 }
