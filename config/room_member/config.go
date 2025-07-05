@@ -9,7 +9,9 @@ import (
 )
 
 const (
-	ErrFmtNoAttribute    = "required attribute %s not found"
+	// ErrFmtNoAttribute is the error message format for missing required attributes.
+	ErrFmtNoAttribute = "required attribute %s not found"
+	// ErrFmtUnexpectedType is the error message format for unexpected attribute types.
 	ErrFmtUnexpectedType = "unexpected type for attribute %s, expected string"
 )
 
