@@ -58,7 +58,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceMemberID),
-		Extract:      resource.ExtractParamPath("id", true),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SpaceMemberIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceMemberIDSelector,
 		To: reference.To{
@@ -106,7 +106,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceMemberID),
-		Extract:      resource.ExtractParamPath("id", true),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SpaceMemberIDRef,
 		Selector:     mg.Spec.InitProvider.SpaceMemberIDSelector,
 		To: reference.To{

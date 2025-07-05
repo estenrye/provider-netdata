@@ -15,12 +15,13 @@ spec:
     - WARNING
     - CLEAR
     repeatNotificationMin: 30
-    roomsIdRefs:
-    - name: example
+    roomsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test
     spaceIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: test
     webhookUrlSecretRef:
-      key: example-key
-      name: example-secret
+      key: webhook-url
+      name: slack-webhook-secret
       namespace: upbound-system

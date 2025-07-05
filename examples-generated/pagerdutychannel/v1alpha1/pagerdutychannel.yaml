@@ -20,8 +20,8 @@ spec:
     - WARNING
     - CLEAR
     repeatNotificationMin: 30
-    roomsId:
-    - <room_id>
+    roomsIdRefs:
+    - name: example
     spaceIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test

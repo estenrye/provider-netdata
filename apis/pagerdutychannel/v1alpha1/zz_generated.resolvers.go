@@ -9,7 +9,9 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
-	v1alpha1 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
+	resource "github.com/crossplane/upjet/pkg/resource"
+	v1alpha1 "github.com/estenrye/provider-netdata/apis/room/v1alpha1"
+	v1alpha11 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -19,16 +21,33 @@ func (mg *PagerdutyChannel) ResolveReferences(ctx context.Context, c client.Read
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.RoomsID),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.ForProvider.RoomsIDRefs,
+		Selector:      mg.Spec.ForProvider.RoomsIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.RoomList{},
+			Managed: &v1alpha1.Room{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoomsID")
+	}
+	mg.Spec.ForProvider.RoomsID = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.RoomsIDRefs = mrsp.ResolvedReferences
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SpaceIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SpaceList{},
-			Managed: &v1alpha1.Space{},
+			List:    &v1alpha11.SpaceList{},
+			Managed: &v1alpha11.Space{},
 		},
 	})
 	if err != nil {
@@ -37,14 +56,30 @@ func (mg *PagerdutyChannel) ResolveReferences(ctx context.Context, c client.Read
 	mg.Spec.ForProvider.SpaceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SpaceIDRef = rsp.ResolvedReference
 
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.RoomsID),
+		Extract:       resource.ExtractResourceID(),
+		References:    mg.Spec.InitProvider.RoomsIDRefs,
+		Selector:      mg.Spec.InitProvider.RoomsIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.RoomList{},
+			Managed: &v1alpha1.Room{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RoomsID")
+	}
+	mg.Spec.InitProvider.RoomsID = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.RoomsIDRefs = mrsp.ResolvedReferences
+
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SpaceIDRef,
 		Selector:     mg.Spec.InitProvider.SpaceIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SpaceList{},
-			Managed: &v1alpha1.Space{},
+			List:    &v1alpha11.SpaceList{},
+			Managed: &v1alpha11.Space{},
 		},
 	})
 	if err != nil {

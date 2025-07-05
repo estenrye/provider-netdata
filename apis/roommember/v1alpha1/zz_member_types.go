@@ -46,7 +46,7 @@ type MemberInitParameters struct {
 	// (String) The Space Member ID of the space
 	// The Space Member ID of the space
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/member/v1alpha1.Member
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("id", true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SpaceMemberID *string `json:"spaceMemberId,omitempty" tf:"space_member_id,omitempty"`
 
 	// Reference to a Member in member to populate spaceMemberId.
@@ -109,7 +109,7 @@ type MemberParameters struct {
 	// (String) The Space Member ID of the space
 	// The Space Member ID of the space
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/member/v1alpha1.Member
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("id", true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SpaceMemberID *string `json:"spaceMemberId,omitempty" tf:"space_member_id,omitempty"`
 

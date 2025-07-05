@@ -41,11 +41,22 @@ type DiscordChannelInitParameters struct {
 
 	// (List of String) The list of room IDs to set the Discord notification. If the rooms list is null, the Discord notification will be applied to All rooms
 	// The list of room IDs to set the Discord notification. If the rooms list is null, the Discord notification will be applied to `All rooms`
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RoomsID []*string `json:"roomsId,omitempty" tf:"rooms_id,omitempty"`
+
+	// References to Room in room to populate roomsId.
+	// +kubebuilder:validation:Optional
+	RoomsIDRefs []v1.Reference `json:"roomsIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Room in room to populate roomsId.
+	// +kubebuilder:validation:Optional
+	RoomsIDSelector *v1.Selector `json:"roomsIdSelector,omitempty" tf:"-"`
 
 	// (String) The ID of the space for the Discord notification
 	// The ID of the space for the Discord notification
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 
 	// Reference to a Space in space to populate spaceId.
@@ -133,12 +144,23 @@ type DiscordChannelParameters struct {
 
 	// (List of String) The list of room IDs to set the Discord notification. If the rooms list is null, the Discord notification will be applied to All rooms
 	// The list of room IDs to set the Discord notification. If the rooms list is null, the Discord notification will be applied to `All rooms`
+	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RoomsID []*string `json:"roomsId,omitempty" tf:"rooms_id,omitempty"`
+
+	// References to Room in room to populate roomsId.
+	// +kubebuilder:validation:Optional
+	RoomsIDRefs []v1.Reference `json:"roomsIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Room in room to populate roomsId.
+	// +kubebuilder:validation:Optional
+	RoomsIDSelector *v1.Selector `json:"roomsIdSelector,omitempty" tf:"-"`
 
 	// (String) The ID of the space for the Discord notification
 	// The ID of the space for the Discord notification
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 

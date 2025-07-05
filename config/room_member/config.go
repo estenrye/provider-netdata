@@ -100,7 +100,7 @@ func Configure(p *config.Provider) {
 
 		r.References["space_member_id"] = config.Reference{
 			TerraformName: "netdata_space_member",
-			Extractor:     "github.com/crossplane/upjet/pkg/resource.ExtractParamPath(\"id\", true)",
+			Extractor:     "github.com/crossplane/upjet/pkg/resource.ExtractResourceID()",
 		}
 
 		r.References["room_id"] = config.Reference{

@@ -80,6 +80,18 @@ func (in *SlackChannelInitParameters) DeepCopyInto(out *SlackChannelInitParamete
 			}
 		}
 	}
+	if in.RoomsIDRefs != nil {
+		in, out := &in.RoomsIDRefs, &out.RoomsIDRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RoomsIDSelector != nil {
+		in, out := &in.RoomsIDSelector, &out.RoomsIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SpaceID != nil {
 		in, out := &in.SpaceID, &out.SpaceID
 		*out = new(string)
@@ -241,6 +253,18 @@ func (in *SlackChannelParameters) DeepCopyInto(out *SlackChannelParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.RoomsIDRefs != nil {
+		in, out := &in.RoomsIDRefs, &out.RoomsIDRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RoomsIDSelector != nil {
+		in, out := &in.RoomsIDSelector, &out.RoomsIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SpaceID != nil {
 		in, out := &in.SpaceID, &out.SpaceID

@@ -83,6 +83,7 @@ type RoomMemberInitParameters struct {
 	// (String) The Room ID of the space.
 	// The Room ID of the space.
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
 	// Reference to a Room in room to populate roomId.
@@ -100,6 +101,7 @@ type RoomMemberInitParameters struct {
 	// (String) Space ID of the member.
 	// Space ID of the member.
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 
 	// Reference to a Space in space to populate spaceId.
@@ -143,6 +145,7 @@ type RoomMemberParameters struct {
 	// (String) The Room ID of the space.
 	// The Room ID of the space.
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/room/v1alpha1.Room
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RoomID *string `json:"roomId,omitempty" tf:"room_id,omitempty"`
 
@@ -162,6 +165,7 @@ type RoomMemberParameters struct {
 	// (String) Space ID of the member.
 	// Space ID of the member.
 	// +crossplane:generate:reference:type=github.com/estenrye/provider-netdata/apis/space/v1alpha1.Space
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SpaceID *string `json:"spaceId,omitempty" tf:"space_id,omitempty"`
 

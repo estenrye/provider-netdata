@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 	v1alpha1 "github.com/estenrye/provider-netdata/apis/room/v1alpha1"
 	v1alpha11 "github.com/estenrye/provider-netdata/apis/space/v1alpha1"
 	errors "github.com/pkg/errors"
@@ -24,7 +25,7 @@ func (mg *RoomMember) ResolveReferences(ctx context.Context, c client.Reader) er
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoomID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.RoomIDRef,
 		Selector:     mg.Spec.ForProvider.RoomIDSelector,
 		To: reference.To{
@@ -40,7 +41,7 @@ func (mg *RoomMember) ResolveReferences(ctx context.Context, c client.Reader) er
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.ForProvider.SpaceIDRef,
 		Selector:     mg.Spec.ForProvider.SpaceIDSelector,
 		To: reference.To{
@@ -56,7 +57,7 @@ func (mg *RoomMember) ResolveReferences(ctx context.Context, c client.Reader) er
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RoomID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.RoomIDRef,
 		Selector:     mg.Spec.InitProvider.RoomIDSelector,
 		To: reference.To{
@@ -72,7 +73,7 @@ func (mg *RoomMember) ResolveReferences(ctx context.Context, c client.Reader) er
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SpaceID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractResourceID(),
 		Reference:    mg.Spec.InitProvider.SpaceIDRef,
 		Selector:     mg.Spec.InitProvider.SpaceIDSelector,
 		To: reference.To{

@@ -10,9 +10,13 @@ import (
 	"fmt"
 
 	"github.com/crossplane/upjet/pkg/config"
+	"github.com/estenrye/provider-netdata/config/discordchannel"
 	member "github.com/estenrye/provider-netdata/config/member"
+	noderoommember "github.com/estenrye/provider-netdata/config/node_room_member"
+	"github.com/estenrye/provider-netdata/config/pagerdutychannel"
 	"github.com/estenrye/provider-netdata/config/room"
 	roommember "github.com/estenrye/provider-netdata/config/room_member"
+	"github.com/estenrye/provider-netdata/config/slackchannel"
 	"github.com/estenrye/provider-netdata/config/space"
 )
 
@@ -55,10 +59,10 @@ func netdataSpaceRoomIDName() config.ExternalName {
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"netdata_notification_discord_channel":   netdataSpaceIDExternalName(),
-	"netdata_notification_pagerduty_channel": netdataSpaceIDExternalName(),
-	"netdata_notification_slack_channel":     netdataSpaceIDExternalName(),
-	"netdata_node_room_member":               netdataSpaceRoomIDName(),
+	"netdata_notification_discord_channel":   discordchannel.NewExternalName(),
+	"netdata_notification_pagerduty_channel": pagerdutychannel.NewExternalName(),
+	"netdata_notification_slack_channel":     slackchannel.NewExternalName(),
+	"netdata_node_room_member":               noderoommember.NewExternalName(),
 	"netdata_room":                           room.NewExternalName(),
 	"netdata_room_member":                    roommember.NewExternalName(),
 	"netdata_space":                          space.NewExternalName(),

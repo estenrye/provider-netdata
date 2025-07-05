@@ -271,10 +271,43 @@ deploy-examples:
 	kubectl apply -f examples/room/room.yaml
 	kubectl apply -f examples/member/member.yaml
 	kubectl apply -f examples/roommember/member.yaml
+	kubectl apply -f examples/discordchannel/secret.yaml
+	kubectl apply -f examples/discordchannel/discordchannel.yaml
+
+deploy-netdata:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+
+	helm upgrade --install netdata netdata/netdata \
+		--set image.tag=edge \
+		--set parent.hostname=test-cluster \
+		--set k8sState.hostname=test-cluster-k8s-state \
+		--set parent.claiming.enabled="true" \
+		--set parent.claiming.token=`kubectl get space test -o jsonpath='{.status.atProvider.claimToken}'` \
+		--set parent.claiming.rooms=`kubectl get space test -o jsonpath='{.status.atProvider.id}'` \
+		--set child.claiming.enabled="true" \
+		--set child.claiming.token=`kubectl get space test -o jsonpath='{.status.atProvider.claimToken}'` \
+		--set child.claiming.rooms=`kubectl get space test -o jsonpath='{.status.atProvider.id}'`
+
+deploy-noderoommember:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl apply -f examples/noderoommember/roommember.yaml
+
+get-all:
+	kind get kubeconfig --name local-dev > ~/.kube/local-dev
+	export KUBECONFIG=~/.kube/local-dev
+	kubectl get space test
+	kubectl get room test
+	kubectl get member test
+	kubectl get roommember test
+	kubectl get discordchannel test
 
 clean-all:
 	kind get kubeconfig --name local-dev > ~/.kube/local-dev
 	export KUBECONFIG=~/.kube/local-dev
+	kubectl delete -f examples/discordchannel/discordchannel.yaml
+	kubectl delete -f examples/noderoommember/roommember.yaml
 	kubectl delete -f examples/roommember/member.yaml
 	kubectl delete -f examples/member/member.yaml
 	kubectl delete -f examples/room/room.yaml
